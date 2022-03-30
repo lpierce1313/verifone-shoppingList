@@ -9,11 +9,13 @@ exports.create = (req, res) => {
     });
   }
 
+  console.log(req.body.num_items);
+
   // Create a ShoppingList
   const shoppingList = new ShoppingList({
     title: req.body.title,
     description: req.body.description,
-    num_items: req.body.howMany,
+    num_items: req.body.num_items,
     purchased: false
   });
 

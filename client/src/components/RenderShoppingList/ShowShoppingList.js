@@ -123,8 +123,23 @@ export const ShowShoppingList = ({ shoppingList, updateShoppingList }) => {
           ))}
         </List>
       </Grid>
-      <AddItem open={openAdd} onClose={handleCloseAdd} onAdd={addItem} updateShoppingList={updateShoppingList}/>
-      <EditItem open={openEdit} onClose={handleCloseEdit} data={modalData} updateShoppingList={updateShoppingList}/>
+      <AddItem
+        open={openAdd}
+        onClose={handleCloseAdd}
+        onAdd={addItem}
+        updateShoppingList={updateShoppingList}
+      />
+      {
+        //Check if message failed
+        modalData && (
+          <EditItem
+            open={openEdit}
+            onClose={handleCloseEdit}
+            data={modalData}
+            updateShoppingList={updateShoppingList}
+          />
+        )
+      }
       <ConfirmDelete
         open={openDelete}
         onClose={handleCloseDelete}

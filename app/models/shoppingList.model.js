@@ -76,7 +76,7 @@ ShoppingList.getAllPurchased = result => {
 ShoppingList.updateById = (id, shoppingList, result) => {
   sql.query(
     "UPDATE shoppinglist SET title = ?, description = ?, purchased = ?, num_items = ? WHERE list_id = ?",
-    [shoppingList.title, shoppingList.description, shoppingList.published, id],
+    [shoppingList.title, shoppingList.description, shoppingList.purchased, shoppingList.num_items, id],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
