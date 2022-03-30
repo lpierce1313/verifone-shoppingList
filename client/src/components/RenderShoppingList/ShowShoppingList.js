@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import EditItem from "../modals/EditItem";
 import ConfirmDelete from "../modals/ConfirmDelete";
 import AddItem from "../modals/AddItem";
+import { FormControlLabel } from "@mui/material";
 
 const addItem = async (listData) => {
   const requestOptions = {
@@ -116,9 +117,30 @@ export const ShowShoppingList = ({ shoppingList, updateShoppingList }) => {
               }
             >
               <ListItemAvatar>
-                <Checkbox />
+                <FormControlLabel
+                  control={<Checkbox color="success" />}
+                  value="item.purchased"
+                  checked={!!item.purchased}
+                />
               </ListItemAvatar>
-              <ListItemText primary={item.title} secondary={item.description} />
+              <ListItemText
+                primary={
+                  <Typography variant="h6" style={item.purchased ? { textDecoration: "line-through", color: "#4D81B7" } : {}}>
+                    {item.title}
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    variant="body1"
+                    color="secondary"
+                    style={
+                      item.purchased ? { textDecoration: "line-through" } : {}
+                    }
+                  >
+                    {item.description}
+                  </Typography>
+                }
+              />
             </ListItem>
           ))}
         </List>

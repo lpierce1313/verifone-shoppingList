@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import Container from "@mui/material/Container";
 import {
   FormGroup,
   FormControlLabel,
@@ -42,10 +41,11 @@ const contentStyle = {
   pl: 3,
   pr: 3,
   mb: 2,
+  mt: 2,
 };
 
 const inputStyle = {
-  mt: 3,
+  mt: 2,
 };
 
 const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
@@ -69,22 +69,25 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
     );
     // convert the data to json
     const json = await response.json();
-    console.log(json);
     updateShoppingList();
     onClose();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateList(
-      {
-        title: title,
-        description: description,
-        num_items: howMany,
-        purchased: purchased,
-      },
-      updateShoppingList
-    );
+    if (howMany === 0 || description === "" || title === "") {
+      alert("Cannot Submit, form is invalid");
+    } else {
+      updateList(
+        {
+          title: title,
+          description: description,
+          num_items: howMany,
+          purchased: purchased,
+        },
+        updateShoppingList
+      );
+    }
   };
   return (
     <div>
@@ -126,42 +129,43 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                 </Typography>
 
                 {/* Start Form Inputs */}
-                <Box component="form" noValidate autoComplete="off" spacing={2}>
+                <Box noValidate autoComplete="off" spacing={2}>
                   <TextField
+                    required
                     fullWidth
                     sx={inputStyle}
                     id="outlined-basic"
-                    label="Outlined"
                     variant="outlined"
+                    placeholder="Item Name"
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <TextField
+                    required
                     fullWidth
                     sx={inputStyle}
                     id="outlined-basic"
-                    label="Outlined"
                     variant="outlined"
                     name="description"
+                    placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     multiline
-                    rows={3}
-                    maxRows={5}
+                    rows={4}
                     inputProps={{ maxLength: 100 }}
                   />
                   <FormControl fullWidth sx={inputStyle}>
-                    <InputLabel id="how-many-select-label">
-                      How many?
-                    </InputLabel>
                     <Select
+                      placeholder="How many"
                       labelId="how-many-select-label"
                       id="how-many"
                       value={howMany}
-                      label="howMany"
                       onChange={(e) => setHowMany(e.target.value)}
                     >
+                      <MenuItem value={0} disabled>
+                        <em style={{ color: "#9CA8B4" }}>How Many?</em>
+                      </MenuItem>
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>
@@ -175,10 +179,10 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                   </FormControl>
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox defaultChecked />}
-                      value="purchased"
+                      control={<Checkbox color="success" />}
+                      value="!!purchased"
                       onChange={updatePurchased}
-                      checked={purchased}
+                      checked={!!purchased}
                       label="Purchased"
                     />
                   </FormGroup>
@@ -196,7 +200,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                 Cancel
               </Button>
               <Button type="submit" variant="contained">
-                Add Task
+                Edit Task
               </Button>
             </Box>
           </Box>

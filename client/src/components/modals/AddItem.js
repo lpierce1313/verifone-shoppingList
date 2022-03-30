@@ -39,16 +39,17 @@ const contentStyle = {
   pl: 3,
   pr: 3,
   mb: 2,
+  mt: 2,
 };
 
 const inputStyle = {
-  mt: 3,
+  mt: 2,
 };
 
 const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [howMany, setHowMany] = useState(1);
+  const [howMany, setHowMany] = useState(0);
 
   const postData = async (jsonData) => {
     const requestOptions = {
@@ -64,23 +65,25 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
     );
     // convert the data to json
     const json = await data.json();
-    console.log(json);
     updateShoppingList();
     onClose();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postData(
-      {
-        title: title,
-        description: description,
-        num_items: howMany,
-        purchased: false,
-      },
-      updateShoppingList
-    );
-    console.log(title, description, howMany);
+    if (howMany === 0 || description === "" || title === "") {
+      alert("Cannot Submit, form is invalid");
+    } else {
+      postData(
+        {
+          title: title,
+          description: description,
+          num_items: howMany,
+          purchased: false,
+        },
+        updateShoppingList
+      );
+    }
   };
   return (
     <div>
@@ -110,54 +113,49 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
               </Box>
               {/* Body */}
               <Box sx={contentStyle}>
-                <Typography variant="h6" component="h2">
-                  Add an Item
-                </Typography>
-                <Typography
-                  id="modal-modal-description"
-                  sx={{ color: "#5C6269" }}
-                  color="secondary"
-                >
+                <Typography variant="h6">Add an Item</Typography>
+                <Typography id="modal-modal-description" color="secondary">
                   Add your new item below
                 </Typography>
 
                 {/* Start Form Inputs */}
-                <Box component="form" noValidate autoComplete="off" spacing={2}>
+                <Box noValidate autoComplete="off" spacing={2}>
                   <TextField
+                    required
                     fullWidth
                     sx={inputStyle}
                     id="outlined-basic"
-                    label="Outlined"
                     variant="outlined"
+                    placeholder="Item Name"
                     name="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                   />
                   <TextField
+                    required
                     fullWidth
                     sx={inputStyle}
                     id="outlined-basic"
-                    label="Outlined"
                     variant="outlined"
                     name="description"
+                    placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     multiline
-                    rows={3}
-                    maxRows={5}
+                    rows={4}
                     inputProps={{ maxLength: 100 }}
                   />
                   <FormControl fullWidth sx={inputStyle}>
-                    <InputLabel id="how-many-select-label">
-                      How many?
-                    </InputLabel>
                     <Select
+                      placeholder="How many"
                       labelId="how-many-select-label"
                       id="how-many"
                       value={howMany}
-                      label="howMany"
                       onChange={(e) => setHowMany(e.target.value)}
                     >
+                      <MenuItem value={0} disabled>
+                        <em style={{ color: "#9CA8B4" }}>How Many?</em>
+                      </MenuItem>
                       <MenuItem value={1}>1</MenuItem>
                       <MenuItem value={2}>2</MenuItem>
                       <MenuItem value={3}>3</MenuItem>

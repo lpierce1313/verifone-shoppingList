@@ -43,8 +43,6 @@ const ShoppingList = () => {
       // convert the data to json
       const json = await data.json();
 
-      console.log(json);
-
       // set state with the result
       setIsLoading(false);
       setShoppingList(json);

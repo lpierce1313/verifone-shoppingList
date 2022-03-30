@@ -1,7 +1,6 @@
 body {
   margin: 0;
   font-family: 'Dosis', sans-serif;
-  font-family: 'Nunito', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -11,11 +10,18 @@ code {
   font-family: 'Nunito', sans-serif;
 }
 
+Button {
+  text-transform: lowercase;
+}
 
 /* Classes */
 
-.fontSize18{
+.fontSize18 {
   font-size: 18px;
+}
+
+.fontPrimary {
+  color: "#2A323C"
 }
 
 .ml-auto {

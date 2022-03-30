@@ -6,14 +6,15 @@ import Container from '@mui/material/Container';
 
 const Navbar = () => {
   return (
-    <AppBar position="static" style={{ background: '#4D81B7' }}>
-      <Container maxWidth="2xl">
+    <AppBar position="static" sx={{ background: '#4D81B7' }}>
+      <Container maxWidth="2xl" sx={{ml: 2, mr: 2}}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+            style={{fontFamily: 'Dosis'}}
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex'} }}
           >
             SHOPPING LIST
           </Typography>

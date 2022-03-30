@@ -9,8 +9,6 @@ exports.create = (req, res) => {
     });
   }
 
-  console.log(req.body.num_items);
-
   // Create a ShoppingList
   const shoppingList = new ShoppingList({
     title: req.body.title,
@@ -19,7 +17,6 @@ exports.create = (req, res) => {
     purchased: false
   });
 
-  console.log(shoppingList);
 
   // Save ShoppingList in the database
   ShoppingList.create(shoppingList, (err, data) => {
@@ -83,8 +80,6 @@ exports.update = (req, res) => {
       message: "Content can not be empty!"
     });
   }
-
-  console.log(req.body);
 
   ShoppingList.updateById(
     req.params.id,

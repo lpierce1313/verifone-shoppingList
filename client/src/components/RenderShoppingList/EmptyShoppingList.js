@@ -38,6 +38,7 @@ const EmptyShoppingList = ({ addItem, updateShoppingList }) => {
         m="auto"
         width={700}
         height={350}
+        sx={{ border: 1, borderColor: "#C6C6C6", mt: 14 }}
         >
         <Typography mt={12} color="text.secondary" variant="body1">
           Your shopping list is empty&nbsp;:(
