@@ -61,7 +61,7 @@ ShoppingList.getAll = (title, result) => {
 };
 
 ShoppingList.getAllPurchased = result => {
-  sql.query("SELECT * FROM shoppinglist WHERE purchased=true", (err, res) => {
+  sql.query("SELECT * FROM shoppinglist WHERE purchased=1", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);

@@ -11,47 +11,17 @@ import {
   FormControlLabel,
   Checkbox,
   FormControl,
-  InputLabel,
   TextField,
   MenuItem,
   Select,
 } from "@mui/material";
+import { modalStyle, modalHeaderStyle, modalContentStyle, modalInputStyle } from "../../constants/styles";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 600,
-  bgcolor: "background.paper",
-  boxShadow: 4,
-};
-
-const headerStyle = {
-  p: 1,
-  pl: 3,
-  pr: 3,
-  backgroundColor: "#FAFAFA",
-  border: "0.5px solid #D5DFE9",
-};
-
-const contentStyle = {
-  p: 1,
-  pl: 3,
-  pr: 3,
-  mb: 2,
-  mt: 2,
-};
-
-const inputStyle = {
-  mt: 2,
-};
 
 const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState(data.description);
-  const [purchased, setPurchased] = useState(data.purchased);
+  const [purchased, setPurchased] = useState(!!data.purchased);
   const [howMany, setHowMany] = useState(data.num_items);
   const updatePurchased = () => setPurchased(!purchased);
 
@@ -69,6 +39,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
     );
     // convert the data to json
     const json = await response.json();
+    console.log(json);
     updateShoppingList();
     onClose();
   };
@@ -98,10 +69,10 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
         aria-describedby="modal-modal-description"
       >
         <form className="form" onSubmit={handleSubmit}>
-          <Box sx={style} className="container">
+          <Box sx={modalStyle} className="container">
             {/* Header */}
             <div>
-              <Box sx={headerStyle}>
+              <Box sx={modalHeaderStyle}>
                 <Grid container alignItems="center">
                   <Grid>
                     <Typography sx={{ color: "#5C6269" }}>
@@ -116,7 +87,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                 </Grid>
               </Box>
               {/* Body */}
-              <Box sx={contentStyle}>
+              <Box sx={modalContentStyle}>
                 <Typography variant="h6" component="h2">
                   Add an Item
                 </Typography>
@@ -133,7 +104,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                   <TextField
                     required
                     fullWidth
-                    sx={inputStyle}
+                    sx={modalInputStyle}
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Item Name"
@@ -144,7 +115,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                   <TextField
                     required
                     fullWidth
-                    sx={inputStyle}
+                    sx={modalInputStyle}
                     id="outlined-basic"
                     variant="outlined"
                     name="description"
@@ -155,7 +126,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
                     rows={4}
                     inputProps={{ maxLength: 100 }}
                   />
-                  <FormControl fullWidth sx={inputStyle}>
+                  <FormControl fullWidth sx={modalInputStyle}>
                     <Select
                       placeholder="How many"
                       labelId="how-many-select-label"
@@ -191,7 +162,7 @@ const EditItem = ({ open, onClose, data, onAdd, updateShoppingList }) => {
             </div>
 
             {/* Bottom Portion */}
-            <Box className="btn-holder" sx={contentStyle}>
+            <Box className="btn-holder" sx={modalContentStyle}>
               <Button
                 onClick={onClose}
                 sx={{ color: "#2A323C", mr: 2 }}

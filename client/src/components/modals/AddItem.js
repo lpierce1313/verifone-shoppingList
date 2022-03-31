@@ -6,50 +6,24 @@ import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import LastPageIcon from "@mui/icons-material/LastPage";
-import Container from "@mui/material/Container";
 import {
   FormControl,
-  InputLabel,
   TextField,
   MenuItem,
   Select,
 } from "@mui/material";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  height: 600,
-  bgcolor: "background.paper",
-  boxShadow: 4,
-};
-
-const headerStyle = {
-  p: 1,
-  pl: 3,
-  pr: 3,
-  backgroundColor: "#FAFAFA",
-  border: "0.5px solid #D5DFE9",
-};
-
-const contentStyle = {
-  p: 1,
-  pl: 3,
-  pr: 3,
-  mb: 2,
-  mt: 2,
-};
-
-const inputStyle = {
-  mt: 2,
-};
+import { modalStyle, modalHeaderStyle, modalContentStyle, modalInputStyle } from "../../constants/styles";
 
 const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [howMany, setHowMany] = useState(0);
+
+  const resetItems = () => {
+    setTitle("");
+    setDescription("");
+    setHowMany(0);
+  }
 
   const postData = async (jsonData) => {
     const requestOptions = {
@@ -65,8 +39,10 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
     );
     // convert the data to json
     const json = await data.json();
+    console.log(json);
     updateShoppingList();
     onClose();
+    resetItems();
   };
 
   const handleSubmit = (e) => {
@@ -94,10 +70,10 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
         aria-describedby="modal-modal-description"
       >
         <form className="form" onSubmit={handleSubmit}>
-          <Box sx={style} className="container">
+          <Box sx={modalStyle} className="container">
             {/* Header */}
             <div>
-              <Box sx={headerStyle}>
+              <Box sx={modalHeaderStyle}>
                 <Grid container alignItems="center">
                   <Grid>
                     <Typography sx={{ color: "#5C6269" }}>
@@ -105,14 +81,14 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
                     </Typography>
                   </Grid>
                   <Grid className="ml-auto">
-                    <IconButton>
+                    <IconButton onClick={onClose}>
                       <LastPageIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
               </Box>
               {/* Body */}
-              <Box sx={contentStyle}>
+              <Box sx={modalContentStyle}>
                 <Typography variant="h6">Add an Item</Typography>
                 <Typography id="modal-modal-description" color="secondary">
                   Add your new item below
@@ -123,7 +99,7 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
                   <TextField
                     required
                     fullWidth
-                    sx={inputStyle}
+                    sx={modalInputStyle}
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Item Name"
@@ -134,7 +110,7 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
                   <TextField
                     required
                     fullWidth
-                    sx={inputStyle}
+                    sx={modalInputStyle}
                     id="outlined-basic"
                     variant="outlined"
                     name="description"
@@ -145,7 +121,7 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
                     rows={4}
                     inputProps={{ maxLength: 100 }}
                   />
-                  <FormControl fullWidth sx={inputStyle}>
+                  <FormControl fullWidth sx={modalInputStyle}>
                     <Select
                       placeholder="How many"
                       labelId="how-many-select-label"
@@ -172,7 +148,7 @@ const AddItem = ({ open, onClose, onAdd, updateShoppingList }) => {
             </div>
 
             {/* Bottom Portion */}
-            <Box className="btn-holder" sx={contentStyle}>
+            <Box className="btn-holder" sx={modalContentStyle}>
               <Button
                 onClick={onClose}
                 sx={{ color: "#2A323C", mr: 2 }}

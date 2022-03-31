@@ -3,18 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 4,
-  p: 3,
-  mb: 2,
-};
+import { deleteModalstyle } from "../../constants/styles";
 
 const ConfirmDelete = ({ open, onClose, data, updateShoppingList }) => {
   async function onDelete() {
@@ -35,7 +24,7 @@ const ConfirmDelete = ({ open, onClose, data, updateShoppingList }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="container">
+        <Box sx={deleteModalstyle} className="container">
           <Typography id="modal-modal-title" variant="h6" component="h2" sx={{pl:4, pr:4}}>
             Delete Item?
           </Typography>
